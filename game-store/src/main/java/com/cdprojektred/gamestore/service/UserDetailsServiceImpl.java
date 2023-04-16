@@ -1,5 +1,6 @@
 package com.cdprojektred.gamestore.service;
 
+import com.cdprojektred.gamestore.exceptions.UserNotFoundException;
 import com.cdprojektred.gamestore.model.UserEntity;
 import com.cdprojektred.gamestore.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException(NO_SUCH_USER_MESSAGE.formatted(username)));
+                .orElseThrow(() -> new UserNotFoundException(NO_SUCH_USER_MESSAGE.formatted(username)));
         return new User(
                 user.getUsername(),
                 user.getPassword(),

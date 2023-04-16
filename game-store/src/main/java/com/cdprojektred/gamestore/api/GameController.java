@@ -3,6 +3,7 @@ package com.cdprojektred.gamestore.api;
 import com.cdprojektred.gamestore.dto.GameDto;
 import com.cdprojektred.gamestore.model.Game;
 import com.cdprojektred.gamestore.service.GameService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,19 +31,17 @@ public class GameController {
     }
 
     @PostMapping("/add")
-    public Game addGame(@RequestBody GameDto gameDto) {
-        return gameService.addGame(gameDto.toGame());
+    public Game addGame(@Valid @RequestBody GameDto gameDto) {
+        return gameService.addGame(gameDto.getName(), gameDto.getCost());
     }
 
     @PostMapping("/delete/{gameId}")
-    public String deleteGame(@PathVariable long gameId) {
+    public void deleteGame(@PathVariable long gameId) {
         gameService.deleteGameById(gameId);
-        return "Game has been deleted";
     }
 
     @PostMapping("/update")
-    public String updateGame(@RequestBody Game game) {
-        gameService.updateGame(game);
-        return "Game has been updated";
+    public Game updateGame(@Valid @RequestBody Game game) {
+        return gameService.updateGame(game);
     }
 }

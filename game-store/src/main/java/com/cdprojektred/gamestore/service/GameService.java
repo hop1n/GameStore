@@ -24,9 +24,8 @@ public class GameService {
         return gameRepository.findAll();
     }
 
-    public Game addGame(Game game) {
-        gameRepository.save(game);
-        return gameRepository.save(game);
+    public Game addGame(String name, int cost) {
+        return gameRepository.save(new Game(name, cost));
     }
 
     public List<Game> searchGame(String name) {
@@ -42,8 +41,8 @@ public class GameService {
         gameRepository.deleteById(id);
     }
 
-    public void updateGame(Game game) {
+    public Game updateGame(Game game) {
         findById(game.getId());
-        gameRepository.save(game);
+        return gameRepository.save(game);
     }
 }

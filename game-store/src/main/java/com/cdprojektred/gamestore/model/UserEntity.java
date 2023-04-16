@@ -8,12 +8,11 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Setter
 public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     private String username;
 

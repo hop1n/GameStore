@@ -12,6 +12,7 @@ import java.util.Date;
 @Component
 @AllArgsConstructor
 public class JWTGenerator {
+
     private static final long jwtExpiration = 70000;
     private static final String jwtSecret = "secret";
 

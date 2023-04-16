@@ -6,6 +6,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +24,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     private JWTGenerator tokenGenerator;
     private UserDetailsServiceImpl userDetailsService;
     private static final int JWT_LENGTH = 7;
+    public static final String BEARER_HEADER_PREFIX = "Bearer ";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -46,8 +48,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private String getJWTFromRequest(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
-        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+        String bearerToken = request.getHeader(HttpHeaders.AUTHORIZATION);
+        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_HEADER_PREFIX)) {
             return bearerToken.substring(JWT_LENGTH);
         }
         return null;
